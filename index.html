@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+  font-family: Arial, sans-serif;
+  background: black;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8em;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 0.95em;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    input[type="submit"] {
+      background-color: #430081;
+      color: white;
+      padding: 0.75rem;
+      border: none;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #5e0ab9;
+    }
+
+    .error {
+      color: red;
+      margin-top: 0.75rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .link a {
+      color: #430081;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .link a:hover {
+      color: #5e0ab9;
+    }
+
+    @media (max-width: 768px) {
+      form {
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.6em;
+      }
+
+      input[type="submit"] {
+        font-size: 0.95rem;
+      }
+    }
+
+   @media (max-width: 480px) {
+  body {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  form {
+    width: 100%;
+    max-width: 90%;
+  }
+
+  h2 {
+    font-size: 1.6rem;     
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  input[type="submit"] {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  label {
+    font-size: 1rem;
+  }
+
+  .link {
+    font-size: 1rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+    <form id="loginForm">
+    <h2>Welcome to NudgeNova!</h2>
+
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <div class="error" id="errorMsg"></div>
+
+    <input type="submit" value="Log in">
+
+    <div class="link">
+      Need an account? <a href="reg-form.html">Register here</a>
+    </div>
+  </form>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
+
+      if (!storedUser) {
+        errorMsg.textContent = "No registered user found. Please register first.";
+        return;
+      }
+
+      if (email !== storedUser.email || password !== storedUser.password) {
+        errorMsg.textContent = "Invalid email or password.";
+        return;
+      }
+
+      if (name !== storedUser.name) {
+        errorMsg.textContent = "Name not found.";
+        return;
+      }
+
+      alert("Login successful!");
+      form.reset();
+      window.location.href = "landing-page.html";
+    });
+  </script>
+
+</body>
+</html>
